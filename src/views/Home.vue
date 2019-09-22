@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <div>
+      {{message}}
       <h1>Create a new transaction</h1>
       <div class="field">
         <label for="amount">Amount:</label>
@@ -42,11 +43,31 @@ export default {
   data() {
     return {
       transaction: {},
+      message: null,
     };
   },
   methods: {
     createPayment() {
-      this.$store.dispatch('createPayment', this.transaction);
+      this.axios.post('https://icapps-nodejs-cashfree-api-sta.herokuapp.com/api/internetpayments/', {
+        apiKey: '8382cd46-3a8d-435d-a004-69fe7c9036b5',
+        amount: this.transaction.amount,
+        profileID: '2458b91a-5920-45f2-89e5-2ae16bc84db5',
+        successURL: 'http://test.test',
+        failureURL: 'http://test.test',
+        webhookURL: 'http://test.test',
+        clientReference: this.transaction.reference,
+      })
+        .then((response) => {
+          this.message = response.data;
+
+          this.$store.dispatch('createPayment', {
+            id: response.data.transactionId,
+            created: new Date(),
+            amount: this.transaction.amount,
+            status: 'UNPAID',
+            reference: this.transaction.reference,
+          });
+        });
     },
   },
   computed: {
