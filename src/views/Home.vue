@@ -42,13 +42,15 @@ export default {
   data() {
     return {
       transaction: {},
-      transactions: this.$store.state.transactions,
     };
   },
   methods: {
     createPayment() {
       this.$store.dispatch('createPayment', this.transaction);
     },
+  },
+  computed: {
+    transactions() { return this.$store.state.transactions; },
   },
 };
 </script>
