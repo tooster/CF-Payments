@@ -44,8 +44,15 @@ export default new Vuex.Store({
     ],
   },
   mutations: {
+    CREATE_PAYMENT(state, transaction) {
+      const transactions = state.transactions.concat(transaction);
+      state.transactions = transactions;
+    },
   },
   actions: {
+    async createPayment({ commit }, payment) {
+      commit('CREATE_PAYMENT', payment);
+    },
   },
   modules: {
   },
