@@ -54,14 +54,16 @@ export default {
     return {
       transaction: {},
       message: null,
+      apiKey: process.env.VUE_APP_API,
+      profileId: process.env.VUE_APP_ID,
     };
   },
   methods: {
     createPayment() {
       this.axios.post('https://icapps-nodejs-cashfree-api-sta.herokuapp.com/api/internetpayments/', {
-        apiKey: '0be934cd-9e94-4df9-8426-72a4e8e03d34',
+        apiKey: this.apiKey,
         amount: this.transaction.amount,
-        profileID: 'ef57edf1-b866-41ac-aeb5-3d0351687703',
+        profileID: this.profileId,
         successURL: 'http://test.test',
         failureURL: 'http://test.test',
         webhookURL: 'http://test.test',

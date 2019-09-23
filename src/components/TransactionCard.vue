@@ -8,8 +8,6 @@
         </v-list-item-title>
         <v-list-item-subtitle>{{transaction.reference}}</v-list-item-subtitle>
       </v-list-item-content>
-
-      <v-list-item-avatar></v-list-item-avatar>
     </v-list-item>
 
     <v-card-actions>
