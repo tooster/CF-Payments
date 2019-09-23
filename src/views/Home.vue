@@ -2,6 +2,7 @@
   <div class="home">
     <div>
       {{message}}
+      {{ moment(new Date()).format("DD/MM/YYYY - HH:mm:ss") }}
       <h1>Create a new transaction</h1>
       <v-card class="pa-4">
         <v-text-field
@@ -62,6 +63,7 @@
 
 <script>
 // @ is an alias to /src
+import moment from 'moment';
 
 export default {
   name: 'home',
@@ -85,10 +87,9 @@ export default {
       })
         .then((response) => {
           this.message = response.data;
-
           this.$store.dispatch('createPayment', {
             id: response.data.transactionId,
-            created: new Date(),
+            created: moment(new Date()).format('DD/MM/YYYY - HH:mm:ss'),
             amount: this.transaction.amount,
             status: 'UNPAID',
             reference: this.transaction.reference,
