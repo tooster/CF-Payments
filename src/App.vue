@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar app>
       <v-toolbar-title class="headline text-uppercase">
-        <span>CASHFREE</span>
+        <span>CASHFREE </span>
         <span class="font-weight-light">TRANSACTION MANAGER</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
