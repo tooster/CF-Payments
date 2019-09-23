@@ -3,33 +3,59 @@
     <div>
       {{message}}
       <h1>Create a new transaction</h1>
-      <div class="field">
-        <label for="amount">Amount:</label>
-        <input type="text" id="amount" v-model="transaction.amount">
-        {{transaction.amount}}
-      </div>
-      <div class="field">
-        <label for="reference">Reference:</label>
-        <input type="text" id="reference" v-model="transaction.reference">
-        {{transaction.reference}}
-      </div>
-      <input type="button" value="Create Payment" @click="createPayment">
+      <v-card class="pa-4">
+        <v-text-field
+              label="Amount"
+              placeholder="10.00"
+              prefix="€"
+              outlined
+              clearable
+              type="number"
+              v-model="transaction.amount"
+            ></v-text-field>
+        <v-text-field
+              label="Reference"
+              placeholder="Order #34"
+              outlined
+              clearable
+              v-model="transaction.reference"
+            ></v-text-field>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="info" @click="createPayment">Create</v-btn>
+        </v-card-actions>
+      </v-card>
     </div>
 
     <div>
       <h1>Transactions</h1>
-      <div class="transaction-list">
-        <div v-for="transaction in transactions" :key="transaction.reference">
-          <router-link :to="{ name: 'payment-detail', params: {id: transaction.id}}">
-            <div class="transaction-list-item">
-              <h3>{{transaction.reference}}</h3>
-              {{transaction.amount}}€ |
-              {{transaction.created}} |
-              {{transaction.status}}
-            </div>
-          </router-link>
-        </div>
-      </div>
+      <v-row class="transaction-list">
+        <v-col v-for="transaction in transactions" :key="transaction.reference" :cols="3">
+          <v-card class="mx-auto">
+            <v-list-item three-line>
+              <v-list-item-content>
+                <div class="overline mb-4">{{transaction.created}}</div>
+                <v-list-item-title class="headline mb-1">
+                  {{transaction.amount}}€
+                </v-list-item-title>
+                <v-list-item-subtitle>{{transaction.reference}}</v-list-item-subtitle>
+              </v-list-item-content>
+
+              <v-list-item-avatar></v-list-item-avatar>
+            </v-list-item>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn text color="info">{{transaction.status}}</v-btn>
+              <v-btn text :to="{
+                name: 'payment-detail',
+                params: {id: transaction.id}
+                }">Details</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
     </div>
   </div>
 </template>
