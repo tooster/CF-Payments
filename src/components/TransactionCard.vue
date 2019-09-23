@@ -19,6 +19,9 @@
         name: 'payment-detail',
         params: {id: transaction.id}
         }">Details</v-btn>
+      <v-btn icon :href=transaction.url target="_blank">
+        <v-icon>mdi-open-in-new</v-icon>
+        </v-btn>
     </v-card-actions>
   </v-card>
 </template>

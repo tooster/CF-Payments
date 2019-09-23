@@ -59,9 +59,9 @@ export default {
   methods: {
     createPayment() {
       this.axios.post('https://icapps-nodejs-cashfree-api-sta.herokuapp.com/api/internetpayments/', {
-        apiKey: '8382cd46-3a8d-435d-a004-69fe7c9036b5',
+        apiKey: '0be934cd-9e94-4df9-8426-72a4e8e03d34',
         amount: this.transaction.amount,
-        profileID: '2458b91a-5920-45f2-89e5-2ae16bc84db5',
+        profileID: 'ef57edf1-b866-41ac-aeb5-3d0351687703',
         successURL: 'http://test.test',
         failureURL: 'http://test.test',
         webhookURL: 'http://test.test',
@@ -75,6 +75,7 @@ export default {
             amount: this.transaction.amount,
             status: 'UNPAID',
             reference: this.transaction.reference,
+            url: `${response.data.paymentURL}?env=staging`,
           });
         });
     },

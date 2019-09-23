@@ -12,6 +12,7 @@ export default new Vuex.Store({
         amount: 10.55,
         status: 'PENDING',
         reference: 'PYMNT - 001',
+        url: 'https://www.cashfree.be/payment/en/66019f5a-2aa4-44fa-a203-33dc31b8b591?env=staging',
       },
     ],
   },
