@@ -56,30 +56,58 @@ export default {
       message: null,
       apiKey: process.env.VUE_APP_API,
       profileId: process.env.VUE_APP_ID,
+      endpoint: process.env.VUE_APP_URL,
+      production: false,
+      apiKeyProd: process.env.VUE_APP_API_PROD,
+      profileIdProd: process.env.VUE_APP_ID_PROD,
+      endpointProd: process.env.VUE_APP_URL_PROD,
     };
   },
   methods: {
     createPayment() {
-      this.axios.post('https://icapps-nodejs-cashfree-api-sta.herokuapp.com/api/internetpayments/', {
-        apiKey: this.apiKey,
-        amount: this.transaction.amount,
-        profileID: this.profileId,
-        successURL: 'http://test.test',
-        failureURL: 'http://test.test',
-        webhookURL: 'https://hooks.zapier.com/hooks/catch/5556062/obg4a6v/',
-        clientReference: this.transaction.reference,
-      })
-        .then((response) => {
-          this.message = response.data;
-          this.$store.dispatch('createPayment', {
-            id: response.data.transactionId,
-            created: moment(new Date()).format('DD/MM/YYYY - HH:mm:ss'),
-            amount: this.transaction.amount,
-            status: 'UNPAID',
-            reference: this.transaction.reference,
-            url: `${response.data.paymentURL}?env=staging`,
+      if (this.production) {
+        this.axios.post(this.endpointProd, {
+          apiKey: this.apiKeyProd,
+          amount: this.transaction.amount,
+          profileID: this.profileIdProd,
+          successURL: 'http://test.test',
+          failureURL: 'http://test.test',
+          webhookURL: 'https://hooks.zapier.com/hooks/catch/5556062/obg4a6v/',
+          clientReference: this.transaction.reference,
+        })
+          .then((response) => {
+            this.message = response.data;
+            this.$store.dispatch('createPayment', {
+              id: response.data.transactionId,
+              created: moment(new Date()).format('DD/MM/YYYY - HH:mm:ss'),
+              amount: this.transaction.amount,
+              status: 'UNPAID',
+              reference: this.transaction.reference,
+              url: `${response.data.paymentURL}`,
+            });
           });
-        });
+      } else {
+        this.axios.post(this.endpoint, {
+          apiKey: this.apiKey,
+          amount: this.transaction.amount,
+          profileID: this.profileId,
+          successURL: 'http://test.test',
+          failureURL: 'http://test.test',
+          webhookURL: 'https://hooks.zapier.com/hooks/catch/5556062/obg4a6v/',
+          clientReference: this.transaction.reference,
+        })
+          .then((response) => {
+            this.message = response.data;
+            this.$store.dispatch('createPayment', {
+              id: response.data.transactionId,
+              created: moment(new Date()).format('DD/MM/YYYY - HH:mm:ss'),
+              amount: this.transaction.amount,
+              status: 'UNPAID',
+              reference: this.transaction.reference,
+              url: `${response.data.paymentURL}?env=staging`,
+            });
+          });
+      }
     },
   },
   computed: {
