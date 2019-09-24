@@ -66,7 +66,7 @@ export default {
         profileID: this.profileId,
         successURL: 'http://test.test',
         failureURL: 'http://test.test',
-        webhookURL: 'http://test.test',
+        webhookURL: 'https://hooks.zapier.com/hooks/catch/5556062/obg4a6v/',
         clientReference: this.transaction.reference,
       })
         .then((response) => {
