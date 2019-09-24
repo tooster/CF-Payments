@@ -2,6 +2,7 @@
   <div class="home">
     <div>
       {{message}}
+      {{endpointProd}}
       {{ moment(new Date()).format("DD/MM/YYYY - HH:mm:ss") }}
       <h1>Create a new transaction</h1>
       <v-card class="pa-4">
